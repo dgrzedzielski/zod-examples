@@ -61,7 +61,10 @@ export function ReactHookFormExample() {
           {...register('title')}
         />
       </div>
-      <button className="rounded-3xl bg-violet-500 px-6 py-2 text-white">
+      <button
+        type="submit"
+        className="rounded-3xl bg-violet-500 px-6 py-2 text-white"
+      >
         Submit
       </button>
     </form>
