@@ -91,7 +91,7 @@ export const FormDataExample = () => {
       />
       <button
         type="submit"
-        className="rounded-3xl bg-violet-500 px-6 py-2 text-white"
+        className="rounded-3xl bg-violet-600 px-6 py-2 text-white hover:bg-violet-800"
       >
         Submit
       </button>
