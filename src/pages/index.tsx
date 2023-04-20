@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { GithubLogo } from '~/components/github-logo';
+
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
@@ -63,6 +65,16 @@ export default function Home() {
             </p>
           </Link>
         </div>
+      </div>
+      <div className="mt-8">
+        <a
+          href="https://github.com/dgrzedzielski/zod-examples"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <GithubLogo />
+          <span className="sr-only">Github repo</span>
+        </a>
       </div>
     </main>
   );
