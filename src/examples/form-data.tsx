@@ -14,7 +14,7 @@ type ErrorsMap<TValues> = {
   [Key in keyof TValues]?: string;
 };
 
-const useForm = <TValues,>({ schema, onSubmit }: UseFormInput<TValues>) => {
+function useForm<TValues>({ schema, onSubmit }: UseFormInput<TValues>) {
   const [errors, setErrors] = React.useState<ErrorsMap<TValues>>({});
 
   const handleSubmit = React.useCallback(
@@ -37,7 +37,7 @@ const useForm = <TValues,>({ schema, onSubmit }: UseFormInput<TValues>) => {
         // validation error, expected, simplified example how to deal with errors returned by zod
         const newErrors: ErrorsMap<TValues> = {};
         error.issues.forEach((issue) => {
-          const [field] = issue.path;
+          const field = issue.path.join('.');
           newErrors[field as keyof TValues] = issue.message;
         });
         setErrors(newErrors);
@@ -47,7 +47,7 @@ const useForm = <TValues,>({ schema, onSubmit }: UseFormInput<TValues>) => {
   );
 
   return { handleSubmit, errors };
-};
+}
 
 const formSchema = z.object({
   firstName: z.string().min(2, 'First name should has at least 2 characters'),

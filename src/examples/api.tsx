@@ -12,8 +12,9 @@ const postDetailsSchema = z.object({
 
 const postDetailsSchemaFailing = z.object({
   title: z.string(),
-  description: z.string(),
-  missingField: z.number(),
+  body: z.string(),
+  id: z.number(),
+  missingField: z.boolean(),
 });
 
 type PostDetailsResponse = z.infer<typeof postDetailsSchema>;
@@ -45,8 +46,7 @@ export const ApiExample = () => {
 
   const updateDataWithError = async () => {
     const response = await fetchData(postDetailsSchemaFailing);
-    // setData(response || null);
-    // we cant even setData here as it's wrong type in comparison with our PostDetailsResponse
+    setData(response || null);
   };
 
   return (
