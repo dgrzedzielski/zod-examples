@@ -21,11 +21,12 @@ function useForm<TValues>({ schema, onSubmit }: UseFormInput<TValues>) {
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      const formData = new FormData(e.currentTarget);
-      const data = Object.fromEntries(formData.entries());
-
       try {
         setErrors({});
+
+        const formData = new FormData(e.currentTarget);
+        const data = Object.fromEntries(formData.entries());
+
         const parsedData = schema.parse(data);
         onSubmit(parsedData);
       } catch (error: any) {
@@ -37,7 +38,7 @@ function useForm<TValues>({ schema, onSubmit }: UseFormInput<TValues>) {
         // validation error, expected, simplified example how to deal with errors returned by zod
         const newErrors: ErrorsMap<TValues> = {};
         error.issues.forEach((issue) => {
-          const field = issue.path.join('.');
+          const field = issue.path.join('.'); // { mainObject: { nestedObject: { another: 123 } } } ['nestedObject', 'another'] => nestedObject.another
           newErrors[field as keyof TValues] = issue.message;
         });
         setErrors(newErrors);
@@ -55,8 +56,10 @@ const formSchema = z.object({
   title: z.string().optional(),
 });
 
+type FormModel = z.infer<typeof formSchema>;
+
 export const FormDataExample = () => {
-  const submitForm = React.useCallback((data: z.infer<typeof formSchema>) => {
+  const submitForm = React.useCallback((data: FormModel) => {
     // we're sure data is in desired shape as this function will be called only after successful validation
     console.log({ data });
   }, []);
